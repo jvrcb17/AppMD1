@@ -26,6 +26,4 @@ public class MedicationActivity extends AppCompatActivity {
         //getMenuInflater().inflate(R.menu.activity_main_drawer, menu);
         return true;
     }
-
-
 }

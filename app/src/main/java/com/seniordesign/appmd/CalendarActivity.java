@@ -1,23 +1,30 @@
 package com.seniordesign.appmd;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.net.nsd.NsdManager;
 import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.provider.CalendarContract.Events;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.View;
 import android.widget.CalendarView;
+import android.widget.DatePicker;
+import android.widget.Toast;
+import android.content.Context;
+import com.seniordesign.appmd.LoginActivity;
 
 import java.util.Calendar;
 
 /**
  * Created by lindsayherron on 8/4/16.
  */
+
+
 public class CalendarActivity extends AppCompatActivity {
-
     CalendarView calendar;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,13 +34,19 @@ public class CalendarActivity extends AppCompatActivity {
         calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-                //Add Date specific code here
+                Toast.makeText(getApplicationContext(), dayOfMonth+"/"+month+"/"+year, Toast.LENGTH_SHORT).show();// TODO Auto-generated method stub
+                Calendar c = Calendar.getInstance();
+                //Get Current Date Values for DatePicker
+                int mYear = c.get(Calendar.YEAR);
+                int mMonth = c.get(Calendar.MONTH);
+                int mDay = c.get(Calendar.DAY_OF_MONTH);
+                //System.out.println("the selected " + mDay);
+                DatePickerDialog dialog = new DatePickerDialog(CalendarActivity.this,
+                        new mDateSetListener(), mYear, mMonth, mDay);
+                dialog.show();
 
-                //onAddEventClicked(calendar);
             }
-
         });
-
     }
 
     @Override
@@ -43,7 +56,7 @@ public class CalendarActivity extends AppCompatActivity {
         return true;
     }
 
-    public void onAddEventClicked(View view){
+    public void calClick(View view){
         Intent intent = new Intent(Intent.ACTION_INSERT);
         intent.setType("vnd.android.cursor.item/event");
 
@@ -62,4 +75,5 @@ public class CalendarActivity extends AppCompatActivity {
 
         startActivity(intent);
     }
+
 }
